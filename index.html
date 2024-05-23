@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Visualisasi Dalam Sains | Home Page</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="View Scientific Concepts at work. Anytime. Anywhere">
+    <meta name="keywords" content="interactive, visualisasidalamsains, simulation, science, education">
+    <meta name="google-site-verification" content="9GighFXREm-tIw0hymUa7X3tHRb1OR31qdV__bw2bwc" />
+
+    <!-- Materialize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- Field toggle Script -->
+    <script src="index.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M95CKRP8HB"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-M95CKRP8HB');
+</script>
+
+<body>
+    <nav class="nav-extended" style="background: black; margin-top: 0mm">
+        <div class="nav-wrapper">
+            <h1 id="main-heading">Visualisasi Dalam Sains</h1>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent tabs-fixed-width">
+            </ul>
+        </div>
+    </nav>
+
+    <br>
+
+    <div class="text">
+        <div class="container" style="width:90%">
+            <center>
+                <b class="flow-text">ANALISIS: MODEL MATEMATIS PREDATOR-PREY TANAMAN PADI DAN TIKUS DI KARAWANG</b>
+                <br>
+                <br> 
+                <b>Parameter :</b>
+                <br>
+                <div class="row">
+                    <div class="col s12 l3">
+                        <label>
+                            <input id="Tingkat Kelahiran Prey" type="checkbox" class="filled-in" checked="checked"
+                                onchange="toggle('Tingkat Kelahiran Prey')" />
+                            <span class="filter-type">Tingkat Kelahiran Prey (Padi)</span>
+                        </label>
+                    </div>
+                    <div class="col s12 l3">
+                        <label>
+                            <input id="Tingkat Kematian Prey" type="checkbox" class="filled-in" checked="checked"
+                                onchange="toggle('Tingkat Kematian Prey')" />
+                            <span class="filter-type">Tingkat Kematian Populasi Prey (Padi)</span>
+
+                        </label>
+                    </div>
+                    <div class="col s12 l3">
+                        <label>
+                            <input id="Tingkat Kelahiran Predator" type="checkbox" class="filled-in" checked="checked"
+                                onchange="toggle('Tingkat Kelahiran Predator')" />
+                            <span class="filter-type">Tingkat Kelahiran Predator (Tikus Sawah) </span>
+                        </label>
+                    </div>
+                    <div class="col s12 l3">
+                        <label>
+                            <input id="Tingkat Kematian Predator" type="checkbox" class="filled-in" checked="checked"
+                                onchange="toggle('Tingkat Kematian Predator')" />
+                            <span class="filter-type">Tingkat Kematian Predator (Tikus Sawah) </span>
+                        </label>
+                    </div>
+                </div>
+            </center>
+            <hr>
+            <br>
+                    <h2 style="margin:0">Lotka Volterra</h2>
+                    <center>
+                    </center>
+                    <p class="flow-text">
+                        Model Lotka-Volterra adalah model populer yang menggambarkan interaksi antara predator dan prey 
+                        atau interaksi kompetitif antara dua spesies (Haberman, 1998). 
+                        Model Lotka-Volterra hanya melibatkan satu predator dan satu prey, namun model tersebut dapat dikembangkan 
+                        menjadi model dengan satu prey dan beberapa predator. Korobeinikov dan Wake telah mengembangkan model untuk 
+                        dua predator dan satu prey (Korobeinikov & Wake, 1999).
+                    </p>
+                    <center>
+                        <a href="lotka_volterra/simulation.html">
+                            <button class="btn purple darken-4 visit-button">Masuk</button>
+                        </a>
+                    </center>
+                </div>
+                <br>
+                <hr>
+                <br>
+            </div>
+
+            <a rel="me" href="https://ecoevo.social/@chandan" style="display:none">Mastodon</a>
+
+            <center>
+                <p>Dibuat Oleh Kelompok 3 Visualisasi Dalam Sains | Kunjungi Saya Di <a href="https://www.github.com/Ditra12">GitHub</a></p>
+            </center>
+        </div>
+    </div>
+
+</body>
+
+</html>
