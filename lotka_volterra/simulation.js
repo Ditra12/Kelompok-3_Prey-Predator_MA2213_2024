@@ -150,21 +150,25 @@ function initParams() {
     }
 }
 
-function updateParams(param) {
-    if (param === 'prey-rep') {
+// Update parameter simulasi berdasarkan input pengguna
+function updateParams(variable) {
+    if (variable === "prey-rep") {
         prey_reproduction = parseFloat(prey_rep_input.value);
         prey_rep_display.innerHTML = "Prey Reproduction Rate: " + prey_reproduction;
-    } else if (param === 'prey-ded') {
+    } else if (variable === "prey-ded") {
         prey_death = parseFloat(prey_ded_input.value);
         prey_ded_display.innerHTML = "Prey Death Rate: " + prey_death;
-    } else if (param === 'pred-rep') {
+    } else if (variable === "pred-rep") {
         predator_reproduction = parseFloat(pred_rep_input.value);
         pred_rep_display.innerHTML = "Predator Reproduction Rate: " + predator_reproduction;
-    } else if (param === 'pred-ded') {
+    } else if (variable === "pred-ded") {
         predator_death = parseFloat(pred_ded_input.value);
         pred_ded_display.innerHTML = "Predator Death Rate: " + predator_death;
-    } else if (param === 'pred-req') {
+    } else if (variable === 'pred-req') {
         pred_requirement = parseInt(pred_req_input.value);
         pred_req_display.innerHTML = "Predator Requirement: " + pred_requirement;
     }
 }
+
+// Inisialisasi parameter simulasi saat halaman dimuat
+initParams();
