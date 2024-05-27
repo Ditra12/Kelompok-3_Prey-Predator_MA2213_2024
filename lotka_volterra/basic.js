@@ -55,11 +55,6 @@ function step() {
     animate(step);
 }
 
-window.onload = function () {
-    defaultParams();
-    initParams();
-    animate(step);
-}
 
 function defaultParams() {
     prey_rep_input.value = 0.4;
@@ -156,3 +151,5 @@ function pauseToggle() {
         pause_button.innerHTML = "Resume";
     }
 }
+
+startSimulation();
