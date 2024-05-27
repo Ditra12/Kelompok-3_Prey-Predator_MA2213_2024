@@ -20,8 +20,6 @@ function update() {
                     grid[i][j] = 0;
                     new_grid[i][j] = 2;
                 }
-                else {
-                }
             }
 
             if (grid[i][j] == 2) {
@@ -41,150 +39,55 @@ function update() {
     for (let i = 0; i < length; i++) {
         for (let j = 0; j < length; j++) {
             if (grid[i][j] == 1) {
-                if (Math.random() < prey_reproduction) {
-                    // reproduction
-                    let neigh_coords = getRandomEmptyNeighbour(i, j);
-                    if (neigh_coords !== undefined) {
-                        new_grid[neigh_coords[0]][neigh_coords[1]] = 1;
-                    }
-                }
-
                 if (Math.random() < prey_death) {
                     // death
                     new_grid[i][j] = 0;
                 }
+                else if (Math.random() < prey_reproduction) {
+                    // reproduction
+                    let neighbors = getEmptyNeighbors(i, j);
+                    if (neighbors.length > 0) {
+                        let random_index = Math.floor(Math.random() * neighbors.length);
+                        let x = neighbors[random_index][0];
+                        let y = neighbors[random_index][1];
+                        new_grid[x][y] = 1;
+                    }
+                    new_grid[i][j] = 1;
+                }
                 else {
-                    // sustenance
                     new_grid[i][j] = 1;
                 }
             }
         }
     }
 
-    // update grid
     grid = new_grid;
 
-    // count
-    let num_pred = 0, num_prey = 0;
-
+    let prey_count = 0;
+    let pred_count = 0;
     for (let i = 0; i < length; i++) {
         for (let j = 0; j < length; j++) {
-            if (grid[i][j] == 1) {
-                num_prey++;
-            }
-            else if (grid[i][j] == 2) {
-                num_pred++;
-            }
+            if (grid[i][j] == 1) prey_count++;
+            if (grid[i][j] == 2) pred_count++;
         }
     }
 
-    prey_num_display.innerHTML = `Populasi mangsa: ${num_prey}`;
-    pred_num_display.innerHTML = `Populasi pemangsa: ${num_pred}`;
-}
-
-function getNumPredators(i, j) {
-    let num = 0;
-    let neighbours = getAllNeighbours(i, j);
-
-    for (let neighbour of neighbours) {
-        if (grid[neighbour[0]][neighbour[1]] == 2) {
-            num++;
-        }
-    }
-
-    return num;
-}
-
-function getRandomEmptyNeighbour(i, j) {
-    let neighbours = getVNNeighbours(i, j);
-    let empty_neighbours = [];
-
-    for (let neighbour of neighbours) {
-        if (grid[neighbour[0]][neighbour[1]] == 0) {
-            empty_neighbours.push(neighbour);
-        }
-    }
-
-    return empty_neighbours[Math.floor(Math.random() * empty_neighbours.length)];
-}
-
-function getVNNeighbours(i, j) {
-    let neighbours = [];
-    neighbours.push([(i + 1) % length, j]);
-    neighbours.push([(i - 1 + length) % length, j]);
-    neighbours.push([i, (j + 1) % length]);
-    neighbours.push([i, (j - 1 + length) % length]);
-    return neighbours;
-}
-
-function getAllNeighbours(i, j) {
-    let neighbours = [];
-    for (let k = -1; k <= 1; k++) {
-        for (let l = -1; l <= 1; l++) {
-            if (k != 0 || l != 0) {
-                neighbours.push([(i + k + length) % length, (j + l + length) % length]);
-            }
-        }
-    }
-    return neighbours;
+    prey_num_display.innerHTML = "Prey: " + prey_count;
+    pred_num_display.innerHTML = "Predators: " + pred_count;
 }
 
 function render() {
-    context.fillStyle = "#000000";
-    context.fillRect(0, 0, canvas_width, canvas_height);
+    context.clearRect(0, 0, canvas_width, canvas_height);
 
-    renderGrid();
-}
-
-function updateParams(variable) {
-    if (variable == "prey-rep") {
-        prey_reproduction = parseFloat(prey_rep_input.value);
-        prey_rep_display.innerHTML = `Tingkat reproduksi mangsa: ${prey_reproduction}`;
-    }
-    if (variable == "prey-ded") {
-        prey_death = parseFloat(prey_ded_input.value);
-        prey_ded_display.innerHTML = `Tingkat kematian mangsa: ${prey_death}`;
-    }
-    if (variable == "pred-rep") {
-        predator_reproduction = parseFloat(pred_rep_input.value);
-        pred_rep_display.innerHTML = `Tingkat reproduksi pemangsa: ${predator_reproduction}`;
-    }
-    if (variable == "pred-ded") {
-        predator_death = parseFloat(pred_ded_input.value);
-        pred_ded_display.innerHTML = `Tingkat kematian pemangsa: ${predator_death}`;
-    }
-    if (variable == "pred-req") {
-        pred_requirement = parseFloat(pred_req_input.value);
-        pred_req_display.innerHTML = `Predator: ${pred_requirement} predator(s) consume 1 prey`;
-    }
-}
-
-function renderGrid() {
     for (let i = 0; i < length; i++) {
         for (let j = 0; j < length; j++) {
             if (grid[i][j] == 1) {
-                context.fillStyle = "#0000ff";
+                context.fillStyle = "blue";
+                context.fillRect(i * pixel_size, j * pixel_size, pixel_size, pixel_size);
             }
             else if (grid[i][j] == 2) {
-                context.fillStyle = "#ff0000";
-            }
-            else {
-                context.fillStyle = "#000000";
-            }
-            context.fillRect(i * pixel_size, j * pixel_size, pixel_size, pixel_size);
-        }
-    }
-}
-
-function populateGrid() {
-    for (let i = 0; i < length; i++) {
-        for (let j = 0; j < length; j++) {
-            random_num = Math.random();
-            if (random_num < initial_occupancy / 2) {
-                grid[i][j] = 1;
-            }
-            else if (random_num > 1 - initial_occupancy) {
-                grid[i][j] = 2;
+                context.fillStyle = "red";
+                context.fillRect(i * pixel_size, j * pixel_size, pixel_size, pixel_size);
             }
         }
     }
@@ -192,39 +95,76 @@ function populateGrid() {
 
 function newGrid() {
     let new_grid = [];
-
     for (let i = 0; i < length; i++) {
-        new_row = []
+        new_grid.push([]);
         for (let j = 0; j < length; j++) {
-            new_row.push(0);
+            new_grid[i].push(0);
         }
-        new_grid.push(new_row);
     }
-
     return new_grid;
 }
 
+function getNumPredators(i, j) {
+    let count = 0;
+    for (let x = Math.max(0, i - 1); x <= Math.min(length - 1, i + 1); x++) {
+        for (let y = Math.max(0, j - 1); y <= Math.min(length - 1, j + 1); y++) {
+            if (grid[x][y] == 2) count++;
+        }
+    }
+    return count;
+}
+
+function getEmptyNeighbors(i, j) {
+    let neighbors = [];
+    for (let x = Math.max(0, i - 1); x <= Math.min(length - 1, i + 1); x++) {
+        for (let y = Math.max(0, j - 1); y <= Math.min(length - 1, j + 1); y++) {
+            if (grid[x][y] == 0) neighbors.push([x, y]);
+        }
+    }
+    return neighbors;
+}
+
 function initParams() {
-    if (mobile) {
-        pixel_size = 3;
-    }
-    else {
-        pixel_size = 5;
-    }
-    
-    length = Math.floor(canvas_width / pixel_size);
-    initial_occupancy = 0.05;
+    prey_reproduction = parseFloat(prey_rep_input.value);
+    predator_reproduction = parseFloat(pred_rep_input.value);
+    prey_death = parseFloat(prey_ded_input.value);
+    predator_death = parseFloat(pred_ded_input.value);
+    pred_requirement = parseInt(pred_req_input.value);
 
-    updateParams("prey-rep");
-    updateParams("prey-ded");
-    updateParams("pred-rep");
-    updateParams("pred-ded");
-    updateParams("pred-req");
+    prey_rep_display.innerHTML = "Prey Reproduction Rate: " + prey_reproduction;
+    prey_ded_display.innerHTML = "Prey Death Rate: " + prey_death;
+    pred_rep_display.innerHTML = "Predator Reproduction Rate: " + predator_reproduction;
+    pred_ded_display.innerHTML = "Predator Death Rate: " + predator_death;
+    pred_req_display.innerHTML = "Predator Requirement: " + pred_requirement;
 
+    length = 50;
+    pixel_size = canvas_width / length;
     grid = newGrid();
-    populateGrid();
 
-    if (paused) {
-        pauseToggle();
+    for (let i = 0; i < length; i++) {
+        for (let j = 0; j < length; j++) {
+            if (Math.random() < initial_occupancy) {
+                grid[i][j] = 1;
+            }
+        }
+    }
+}
+
+function updateParams(param) {
+    if (param === 'prey-rep') {
+        prey_reproduction = parseFloat(prey_rep_input.value);
+        prey_rep_display.innerHTML = "Prey Reproduction Rate: " + prey_reproduction;
+    } else if (param === 'prey-ded') {
+        prey_death = parseFloat(prey_ded_input.value);
+        prey_ded_display.innerHTML = "Prey Death Rate: " + prey_death;
+    } else if (param === 'pred-rep') {
+        predator_reproduction = parseFloat(pred_rep_input.value);
+        pred_rep_display.innerHTML = "Predator Reproduction Rate: " + predator_reproduction;
+    } else if (param === 'pred-ded') {
+        predator_death = parseFloat(pred_ded_input.value);
+        pred_ded_display.innerHTML = "Predator Death Rate: " + predator_death;
+    } else if (param === 'pred-req') {
+        pred_requirement = parseInt(pred_req_input.value);
+        pred_req_display.innerHTML = "Predator Requirement: " + pred_requirement;
     }
 }
