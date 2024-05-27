@@ -71,7 +71,7 @@ function defaultParams() {
 
 let click_x, click_y, pressed;
 
-if(mobile) {
+if (mobile) {
     canvas.addEventListener("touchstart", function (e) {
         getTouchPosition(canvas, e);
         let touch = e.touches[0];
@@ -125,11 +125,11 @@ else {
         released();
     });
 
-    window.addEventListener("keydown", function(e) {
+    window.addEventListener("keydown", function (e) {
         keyPressed(e.keyCode);
     }, false);
 
-    window.addEventListener("keydown", function(e) {
+    window.addEventListener("keyup", function (e) {
         keyReleased(e.keyCode);
     }, false);
 }
